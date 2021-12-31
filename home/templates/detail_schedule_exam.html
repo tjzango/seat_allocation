@@ -6,6 +6,9 @@
     <div class="panel panel-default">
         <div class="panel-heading">
             Schedule Examination
+            <a href="{% url 'allocate_seat' scheduled_exam.id request.path %}">
+                <button class="btn btn-primary" type="submit">Allocate Seats</button>
+            </a>
         </div>
         <div class="panel-body">
             <form role="form" class="form-horizontal" id="login-form" method="post" enctype="multipart/form-data"> 

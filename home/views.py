@@ -1,3 +1,4 @@
+from django import contrib
 from django.contrib.auth.models import User
 from django.db import models
 from django.http.response import HttpResponse
@@ -71,6 +72,32 @@ def staff_login(request):
     }
     return render(request, "staff-login.html", context)
 
+def student_login(request):
+    form = AdminLoginForm(request.POST or None)
+    if form.is_valid():
+        username = form.cleaned_data["admin_id"]
+        password = form.cleaned_data['password']
+        try:
+            user = Student.objects.get(user__username=username)
+            if user.user.is_active:
+                user = authenticate(username=username, password=password)
+                if user:
+                    login(request, user)
+                    return redirect("student-dashboard")
+                else:
+                    messages.success(
+                        request, 'Registration Number/ Date Of Birth Does Not March')
+            else:
+                messages.success(
+                    request, 'Authorisation Error Contact Admin To Regain Access')
+        except Exception as e:
+            messages.success(
+                request, 'Registration Number/ Date Of Birth Does Not March'.format(e))
+    context = {
+        'form': form,
+        'student': 1,
+    }
+    return render(request, "staff-login.html", context)
 
 def admin_dashboard(request):
     return render(request, "admin-dahboard.html")
@@ -266,3 +293,19 @@ def remove_venue_schedule_exam(request, venue_id, schedule_id, path):
     messages.success(request, "Venue removed form scheduled exam")
     return redirect(path)
         
+
+
+def allocate_seat(request, schedule_id, path):
+    scheduled_exam = ScheduleExamination.objects.get(id=schedule_id)
+    if scheduled_exam.current_capacity < scheduled_exam.total_student:
+        messages.error(request,"Venue can not fit student, Kindly add more venues")
+        return redirect(path)
+    
+
+
+def allusers(request):
+    users = User.objects.all()
+    context = {
+        'users': users
+    }
+    return render(request, "allusers.html", context)

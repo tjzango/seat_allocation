@@ -5,14 +5,14 @@
     <!-- Page breadcrumb -->
     <div class="panel panel-default">
         <div class="panel-heading">
-            Schedule Examination
+            Schedule Examination 
         </div>
         <div class="panel-body">
             <form role="form" class="form-horizontal" id="login-form" method="post" enctype="multipart/form-data"> 
                 {% csrf_token %}
                 <fieldset>
                     <div class="form-group">
-                        <label for="Users_email" class="col-sm-3 control-label">Add Venue</label>
+                        <label for="Users_email" class="col-sm-3 control-label">Exam Name</label>
                         <div class="col-sm-9">
                             <div class="col-md-5">
                                 {% render_field form.name class="form-control" maxlength="255" name="Users[email]" id="Users_email"  %}

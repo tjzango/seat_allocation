@@ -61,4 +61,4 @@ class StudentSchedule(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     scheduled_exam = models.ForeignKey(ScheduleExamination, on_delete=models.CASCADE)
     seat_number = models.IntegerField()
-    venue = models.ForeignKey(Venue, on_delete=models.CASCADE)
+    venue = models.ForeignKey(Venue, on_delete=models.CASCADE, null=True)
