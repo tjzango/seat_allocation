@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% block content %}
+
+    <!-- Page breadcrumb -->
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Schedule Examination
+        </div>
+        <div class="panel-body">
+            <form role="form" class="form-horizontal" id="login-form" method="post" enctype="multipart/form-data"> 
+                {% csrf_token %}
+                <fieldset>
+                    {% if scheduled_exam.total_student > scheduled_exam.current_capacity %}
+                    <div class="form-group">
+                        <label for="Users_email" class="col-sm-3 control-label">Add Venue</label>
+                        <div class="col-sm-9">
+                            <div class="col-md-5">
+                                {% render_field form.venue class="form-control" maxlength="255" name="Users[email]" id="Users_email"  %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="Users_name_book" class="col-sm-3 control-label">
+                            <button class="btn btn-primary" type="submit">Add Venue</button>
+                        </label>
+                    </div> 
+                    {% endif %}
+                    <hr/>Venues  
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="sn">S/N</th>
+                                <th class="other-cell"> Name</th>
+                                <th class="other-cell"> Capacity </th>
+                                <th class="other-cell"> Location </th>
+                                <th class="other-cell"> Action </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for venue in scheduled_exam.venue.select_related %}
+                                <tr class="firstRow">
+                                    <td class="sn">{{ forloop.counter }}</td>
+                                    <td class="other-cell">{{ venue.name }}</td>
+                                    <td class="other-cell"> {{ venue.capacity }} </td>
+                                    <td class="other-cell">{{ student.address }}</td />
+                                    <td class="other-cell"><a href="{% url 'remove_venue_schedule_exam' scheduled_exam.id venue.id request.path %}"> Remove</a></td />
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </fieldset>
+                
+            </form>
+            
+        </div><hr />
+        <div class="panel-body">
+            <div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="sn">S/N</th>
+                            <th class="other-cell"> Student Name</th>
+                            <th class="other-cell"> Registration Number </th>
+                            <th class="other-cell"> Seat Number </th>
+                            <th class="other-cell"> Venue </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for student in students %}
+                            <tr class="firstRow">
+                                <td class="sn">{{ forloop.counter }}</td>
+                                <td class="other-cell">{{ student.student.user.first_name }}</td>
+                                <td class="other-cell"> {{ student.student.user.username }} </td>
+                                <td class="other-cell">{{ student.seat_number }}</td />
+                                <td class="other-cell">{{ student.venue }}</td />
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

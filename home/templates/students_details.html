@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% block content %}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        Students Group
+    </div>
+    <div class="panel-body">
+        <div>
+            <table>
+                <thead>
+                    <tr>
+                        <th class="sn">S/N</th>
+                        <th class="other-cell"> Session</th>
+                        <th class="other-cell"> Full Name </th>
+                        <th class="other-cell"> Deactivate User </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for student in students %}
+                        <tr class="firstRow">
+                            <td class="sn">{{ forloop.counter }}</td>
+                            <td class="other-cell">{{ student.registration_number }}</td>
+                            <td class="other-cell"> {{ student.user.first_name }} </td>
+                            <td class="other-cell">
+                                {% if student.user.is_active %}
+                                    <a href="{% url 'deactivate' student.user.id request.path %}" >Deactivate </a>
+                                {% else %}
+                                    <a href="{% url 'activate' student.user.id request.path %}"> Active
+                                {% endif %}
+                            </td />
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock content %}

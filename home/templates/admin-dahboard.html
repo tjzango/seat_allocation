@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <!-- Page breadcrumb -->
+    <ol class="breadcrumb">
+        <li><a href="#">Dashboard</a></li>
+    </ol>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Dashboard
+        </div>
+        <div class="panel-body">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore
+            et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+            culpa qui officia deserunt mollit anim id est laborum.
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Form
+        </div>
+        <div class="panel-body">
+            <div>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
+                labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+                voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
+                non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </div>
+            <form role="form" class="form-horizontal" id="login-form" action="" method="post">
+                <!-- <legend>Site settings</legend> -->
+                <fieldset>
+                    <div class="form-group">
+                        <label for="Users_email" class="col-sm-3 control-label">E-mail</label>
+                        <div class="col-sm-9">
+                            <div class="col-md-5">
+                                <input class="form-control" maxlength="255" name="Users[email]" id="Users_email"
+                                    type="email" value="sqds@cock.li">
+                            </div>
+                            <div class="col-md-9">
+                                <div class="text-danger form-control-static" id="Users_email_em_"
+                                    style="display:none"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Users_gmt" class="col-sm-3 control-label">Time</label>
+                        <div class="col-sm-9">
+                            <div class="col-md-5">
+                                <select class="form-control" name="Users[gmt]" id="Users_gmt">
+                                    <option value="0" selected="selected">00:00</option>
+                                    <option value="1">+01:00</option>
+                                    <option value="2">+02:00</option>
+                                    <option value="3">+03:00</option>
+                                </select>
+                            </div>
+                            <div class="col-md-12">
+                                <p class="help-block">Current server time: 16:18<br>If your time is different
+                                    from the time on the server, adjust the sending time.</p>
+                                <div class="text-danger form-control-static" id="Users_gmt_em_"
+                                    style="display:none"></div>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Book settings</legend>
+
+                    <div class="form-group">
+                        <label for="Users_name_book" class="col-sm-3 control-label">Book name</label>
+                        <div class="col-sm-9">
+                            <div class="col-md-5">
+                                <input class="form-control" maxlength="255" name="Users[name_book]"
+                                    id="Users_name_book" type="text" value="RSS"> </div>
+                            <div class="col-md-9">
+                                <p class="help-block">You can change default name of the book</p>
+                                <div class="text-danger form-control-static" id="Users_name_book_em_"
+                                    style="display:none"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Users_name_book" class="col-sm-3 control-label">Enable export</label>
+                        <div class="col-sm-9">
+                            <div class="col-md-5">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" class="input-control" id="exampleCheck1">
+                                        Enable
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-9">
+                                <p class="help-block">When exporting from a separate tape, assign the name of
+                                    this tape</p>
+                                <div class="text-danger form-control-static" id="Users_name_book_em_"
+                                    style="display:none"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr>
+                </fieldset>
+
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}

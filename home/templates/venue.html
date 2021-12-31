@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% block content %}
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        Venue
+    </div>
+    <div class="panel-body">
+        <div>
+            <table>
+                <thead>
+                    <tr>
+                        <th class="sn">S/N</th>
+                        <th class="other-cell"> Venue Name</th>
+                        <th class="other-cell"> Address </th>
+                        <th class="other-cell"> Capacity </th>
+                        <th class="other-cell"> Edit </th>
+                        <th class="other-cell"> Availability </th>
+                        <th class="category"> Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for venue in venues %}
+                        <tr class="firstRow">
+                            <td class="sn">{{ forloop.counter }}</td>
+                            <td class="other-cell">{{ venue.name }}</td>
+                            <td class="other-cell"> {{ venue.address }} </td>
+                            <td class="other-cell"> {{ venue.capacity }} </td>
+                            <td class="other-cell"> Edit </td>
+                            <td class="other-cell"> {% if venue.availability == 1 %}Yes {% else %} No {% endif %}</td>
+                            <td class="category"><a href="{% url 'delete-venue' venue.id %}"> Delete</a> </td />
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <form role="form" class="form-horizontal" method="post">{% csrf_token %}
+            <!-- <legend>Site settings</legend> -->
+            <fieldset>
+                <legend>Add New Venue</legend>
+
+                <div class="form-group">
+                    <label for="Users_name_book" class="col-sm-3 control-label">Name</label>
+                    <div class="col-sm-9">
+                        <div class="col-md-5">
+                            {% render_field form.name class="form-control" maxlength="255" name="Users[name_book]" id="Users_name_book" %}
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="Users_name_book" class="col-sm-3 control-label">Address</label>
+                    <div class="col-sm-9">
+                        <div class="col-md-5">
+                            {% render_field form.address maxlength="255" name="Users[name_book]" id="Users_name_book" %}
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="Users_name_book" class="col-sm-3 control-label">Capacity</label>
+                    <div class="col-sm-9">
+                        <div class="col-md-5">
+                            {% render_field form.capacity class="form-control" maxlength="255" name="Users[name_book]" id="Users_name_book" %}
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="Users_name_book" class="col-sm-3 control-label">
+                        <button class="btn btn-primary" type="submit">Add Venue</button>
+                    </label>
+                </div>
+                <hr>
+            </fieldset>
+
+        </form>
+    </div>
+</div>
+{% endblock content %}

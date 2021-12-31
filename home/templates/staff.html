@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% block content %}
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        Staff
+    </div>
+    <div class="panel-body">
+        <div>
+            <table>
+                <thead>
+                    <tr>
+                        <th class="sn">S/N</th>
+                        <th class="other-cell"> Staff Name</th>
+                        <th class="other-cell"> Staff ID </th>
+                        <th class="other-cell"> Allocated To</th>
+                        <th class="other-cell"> Activate/Deactive</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for staff in staffs %}
+                        <tr class="firstRow">
+                            <td class="sn">{{ forloop.counter }}</td>
+                            <td class="other-cell">{{ staff.user.first_name }}</td>
+                            <td class="other-cell"> {{ staff.staff_id }} </td>
+                            <td class="other-cell"> Venue from X to Z </td>
+                            <th class="other-cell"> Deactivate</th>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <form role="form" class="form-horizontal" id="login-form" method="post">{% csrf_token %}
+            <!-- <legend>Site settings</legend> -->
+            <fieldset>
+                <legend>Add a Staff User</legend>
+
+                <div class="form-group">
+                    <label for="Users_name_book" class="col-sm-3 control-label">Full Name</label>
+                    <div class="col-sm-9">
+                        <div class="col-md-5">
+                            {% render_field form.staff_id class="form-control" maxlength="255" name="Users[name_book]" id="Users_name_book" %}
+                        </div>
+                        <div class="col-md-9">
+                            <p class="help-block">Enter staff full name</p>
+                            <div class="text-danger form-control-static" id="Users_name_book_em_" style="display:none">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="Users_name_book" class="col-sm-3 control-label">Staff ID</label>
+                    <div class="col-sm-9">
+                        <div class="col-md-5">
+                            {% render_field form.full_name class="form-control" maxlength="255" name="Users[name_book]" id="Users_name_book" %}
+                        </div>
+                        <div class="col-md-9">
+                            <p class="help-block">Enter staff full name</p>
+                            <div class="text-danger form-control-static" id="Users_name_book_em_" style="display:none">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="Users_name_book" class="col-sm-3 control-label">
+                        <button class="btn btn-primary" type="submit">Add Staff</button>
+                    </label>
+                </div>
+                <hr>
+            </fieldset>
+
+        </form>
+    </div>
+</div>
+{% endblock content %}

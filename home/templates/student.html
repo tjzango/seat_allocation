@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% block content %}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        Total Student
+    </div>
+    <div class="panel-body">
+        <div>
+            <table>
+                <thead>
+                    <tr>
+                        <th class="sn">S/N</th>
+                        <th class="other-cell"> Session</th>
+                        <th class="other-cell"> Total </th>
+                        <th class="other-cell"> View </th>
+                        <th class="category"> Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for students in studentSET %}
+                        <tr class="firstRow">
+                            <td class="sn">{{ forloop.counter }}</td>
+                            <td class="other-cell">{{ students.session }}</td>
+                            <td class="other-cell"> {{ students.total_students }} </td>
+                            <td class="other-cell"> <a href="{% url 'view_student_group' students.id %}"> View Users </a></td>
+                            <td class="category"> <a href="{% url 'delete_student_group' students.id %}"> Delete </a></td />
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <form role="form" class="form-horizontal" id="login-form" method="post" enctype="multipart/form-data"> {% csrf_token %}
+            <!-- <legend>Site settings</legend> -->
+            <fieldset>
+                <legend>Upload Student Users</legend>
+
+                <div class="form-group">
+                    <label for="Users_name_book" class="col-sm-3 control-label">Session</label>
+                    <div class="col-sm-9">
+                        <div class="col-md-5">
+                            {% render_field form.session class="form-control" maxlength="255" name="Users[name_book]" id="Users_name_book" %}
+                        </div>
+                        <div class="col-md-9">
+                            <p class="help-block">Enter Student Session Group</p>
+                            <div class="text-danger form-control-static" id="Users_name_book_em_" style="display:none">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                
+                <div class="form-group">
+                    <label for="Users_name_book" class="col-sm-3 control-label">Upload</label>
+                    <div class="col-sm-9">
+                        <div class="col-md-5">
+                            {% render_field form.csv_file class="form-control" maxlength="255" name="Users[name_book]" id="Users_name_book" %}
+                        </div>
+                        <div class="col-md-9">
+                            <p class="help-block">Upload valid .cvs file</p>
+                            <div class="text-danger form-control-static" id="Users_name_book_em_" style="display:none">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="Users_name_book" class="col-sm-3 control-label">
+                        <button class="btn btn-primary" type="submit">Upload Students</button>
+                    </label>
+                </div>
+                <hr>
+            </fieldset>
+
+        </form>
+    </div>
+</div>
+{% endblock content %}
