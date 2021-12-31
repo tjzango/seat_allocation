@@ -20,7 +20,7 @@ from django.contrib.auth.views import LogoutView, PasswordChangeView
 
 
 urlpatterns = [
-    path('', index, name="index"),
+    path('', index, name="index"), 
     path('login/', admin_login_, name="login"),
     path('staff/login/', staff_login, name="staff-login"),
     path('a/student/', student, name="student"),
