@@ -62,8 +62,11 @@ https://templatemo.com/tm-535-softy-pinko
                                 {% endif %}
                                 <form method="post"> {% csrf_token %}
                                     <div class="form-outline form-white mb-4">
-                                        {% render_field form.admin_id id="typeEmailX" placeholder="Registration Number" class="form-control form-control-lg" %}
-                                        
+                                        {% if student %}
+                                            {% render_field form.admin_id id="typeEmailX" placeholder="Registration Number" class="form-control form-control-lg" %}
+                                        {% else %}
+                                            {% render_field form.admin_id id="typeEmailX" placeholder="Staff ID" class="form-control form-control-lg" %}
+                                        {% endif %}
                                     </div>
 
                                     <div class="form-outline form-white mb-4">

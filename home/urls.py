@@ -19,6 +19,7 @@ from .views import (
     detail_schedule_exam,
     student_login,
     allocate_seat,
+    student_dashboard,
 )
 from django.contrib.auth.views import LogoutView, PasswordChangeView
 
@@ -27,6 +28,7 @@ urlpatterns = [
     path('', index, name="index"), 
     path('login/', admin_login_, name="login"),
     path('student/login/', student_login, name="student_login"),
+    path('student/dashboard/', student_dashboard, name="student-dashboard"),
     path('staff/login/', staff_login, name="staff-login"),
     path('a/student/', student, name="student"),
     path('a/venue/', venue, name="venue"),

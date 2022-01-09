@@ -30,7 +30,7 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="#">
-                    Administrator
+                    {% if usertype.registration_number %}Student {% elif usertype.staff_id %}Staff {% else %}Administrator{% endif %}   
                 </a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -66,15 +66,20 @@
                     <nav class="navbar navbar-default" role="navigation">
                         <!-- Main Menu -->
                         <div class="side-menu-container">
-                            <ul class="nav navbar-nav">
-                                <li class="active"><a href="{% url 'admin-dashboard' %}"><span class="glyphicon glyphicon-dashboard"></span>
-                                        Dashboard</a></li>
-                                <li><a href="{% url 'schedule' %}"><span class="glyphicon glyphicon-plane"></span> Schedule Exam</a></li>
-                                <li><a href="{% url 'staff' %}"><span class="glyphicon glyphicon-cloud"></span> Staffs</a></li>
-                                <li><a href="{% url 'student' %}"><span class="glyphicon glyphicon-user"></span> Students</a></li>
-                                <li><a href="{% url 'venue' %}"><span class="glyphicon glyphicon-signal"></span> Venue</a></li>
-                                <li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-signal"></span> Logout</a></li>
-                            </ul>
+                            {% if usertype.registration_number %}
+                            
+                            {% elif usertype.admin_id %}
+                                <ul class="nav navbar-nav">
+                                    <li class="active"><a href="{% url 'admin-dashboard' %}"><span class="glyphicon glyphicon-dashboard"></span>
+                                            Dashboard</a></li>
+                                    <li><a href="{% url 'schedule' %}"><span class="glyphicon glyphicon-plane"></span> Schedule Exam</a></li>
+                                    <li><a href="{% url 'staff' %}"><span class="glyphicon glyphicon-cloud"></span> Staffs</a></li>
+                                    <li><a href="{% url 'student' %}"><span class="glyphicon glyphicon-user"></span> Students</a></li>
+                                    <li><a href="{% url 'venue' %}"><span class="glyphicon glyphicon-signal"></span> Venue</a></li>
+                                    <li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-signal"></span> Logout</a></li>
+                                </ul>
+                            {% else %}
+                            {% endif %}
                         </div>
                         <!-- /.navbar-collapse -->
                     </nav>

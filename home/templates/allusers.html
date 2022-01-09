@@ -4,11 +4,10 @@
 
     <!-- Page breadcrumb -->
     <ol class="breadcrumb">
-        <li><a href="#">All Users {% for a in users %}111111111111111111{% endfor %} {{users}}</a></li>
+        <li><All Users </li>
     </ol>
 
     <div class="panel panel-default">
-        {% if usertype.registration_number %}
         <div class="panel-body">
             <div>
                 <table>
@@ -21,75 +20,18 @@
                         </tr>
                     </thead>
                     <tbody> 
-                        {% for u in users %}
-                            <tr class="firstRow">3
-                                <td class="sn">{{ forloop.counter }}</td>
-                                <td class="other-cell">{{ u.full_name }}</td>
-                                <td class="other-cell"> {{ u.last_login }} </td>
-                                <td class="other-cell">{{ u.username }}</td />
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        {% elif usertype.staff_id %}
-        <div class="panel-body">
-            <div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th class="sn">S/N</th>
-                            <th class="other-cell"> Examination Name</th>
-                            <th class="other-cell"> Exam Date </th>
-                            <th class="other-cell"> Duration </th>
-                            <th class="other-cell"> View </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for examination in schedule_examination %}
+                        {% for user in users %}
                             <tr class="firstRow">
                                 <td class="sn">{{ forloop.counter }}</td>
-                                <td class="other-cell">{{ examination.name }}</td>
-                                <td class="other-cell"> {{ examination.exam_date }} </td>
-                                <td class="other-cell">{{ examination.duration }}</td />
-                                <td class="other-cell"><a href="{% url 'detail_schedule_exam' examination.id %}">View</a></td />
+                                <td class="other-cell">{{ user.first_name }}</td>
+                                <td class="other-cell"> {{ user.last_login }} </td>
+                                <td class="other-cell">{{ user.username }}</td />
                             </tr>
                         {% endfor %}
                     </tbody>
                 </table>
             </div>
         </div>
-        {% else %}
-        <div class="panel-body">
-            <div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th class="sn">S/N</th>
-                            <th class="other-cell"> Examination Name</th>
-                            <th class="other-cell"> Exam Date </th>
-                            <th class="other-cell"> Duration </th>
-                            <th class="other-cell"> View </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for examination in schedule_examination %}
-                            <tr class="firstRow">
-                                <td class="sn">{{ forloop.counter }}</td>
-                                <td class="other-cell">{{ examination.name }}</td>
-                                <td class="other-cell"> {{ examination.exam_date }} </td>
-                                <td class="other-cell">{{ examination.duration }}</td />
-                                <td class="other-cell"><a href="{% url 'detail_schedule_exam' examination.id %}">View</a></td />
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        {% endif %}
-        <div class="panel-body">
-         </div>
     </div>
 
    

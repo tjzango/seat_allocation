@@ -72,13 +72,25 @@ def staff_login(request):
     }
     return render(request, "staff-login.html", context)
 
+
+def student_dashboard(request):
+    student = Student.objects.get(user=request.user)
+    examinations = StudentSchedule.objects.filter(student=student).order_by("-id")
+    context = {
+        "student": student,
+        "examinations": examinations
+    }
+    return render(request, "admin-dahboard.html", context)
+
+
 def student_login(request):
     form = AdminLoginForm(request.POST or None)
     if form.is_valid():
         username = form.cleaned_data["admin_id"]
         password = form.cleaned_data['password']
         try:
-            user = Student.objects.get(user__username=username)
+            user = Student.objects.get(registration_number=username)
+            print 
             if user.user.is_active:
                 user = authenticate(username=username, password=password)
                 if user:
@@ -92,7 +104,7 @@ def student_login(request):
                     request, 'Authorisation Error Contact Admin To Regain Access')
         except Exception as e:
             messages.success(
-                request, 'Registration Number/ Date Of Birth Does Not March'.format(e))
+                request, 'Registration Number/ Date Of Birth Does Not March {}'.format(e))
     context = {
         'form': form,
         'student': 1,

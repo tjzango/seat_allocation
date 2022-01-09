@@ -8,87 +8,66 @@
     </ol>
 
     <div class="panel panel-default">
+
         {% if usertype.registration_number %}
-        <div class="panel-body">
-            <div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th class="sn">S/N</th>
-                            <th class="other-cell"> Examination Name</th>
-                            <th class="other-cell"> Exam Date </th>
-                            <th class="other-cell"> Duration </th>
-                            <th class="other-cell"> View </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for examination in schedule_examination %}
-                            <tr class="firstRow">
-                                <td class="sn">{{ forloop.counter }}</td>
-                                <td class="other-cell">{{ examination.name }}</td>
-                                <td class="other-cell"> {{ examination.exam_date }} </td>
-                                <td class="other-cell">{{ examination.duration }}</td />
-                                <td class="other-cell"><a href="{% url 'detail_schedule_exam' examination.id %}">View</a></td />
+            <div class="panel-body">
+                <div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="sn">S/N</th>
+                                <th class="other-cell"> Examination Name</th>
+                                <th class="other-cell"> Exam Date </th>
+                                <th class="other-cell"> Duration </th>
+                                <th class="other-cell"> View </th>
                             </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {% for examination in examinations %}
+                                <tr class="firstRow">
+                                    <td class="sn">{{ forloop.counter }}</td>
+                                    <td class="other-cell">{{ examination.scheduled_exam.name }}</td>
+                                    <td class="other-cell"> {{ examination.scheduled_exam.exam_date }} </td>
+                                    <td class="other-cell">{{ examination.scheduled_exam.duration }}</td />
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
         {% elif usertype.staff_id %}
-        <div class="panel-body">
-            <div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th class="sn">S/N</th>
-                            <th class="other-cell"> Examination Name</th>
-                            <th class="other-cell"> Exam Date </th>
-                            <th class="other-cell"> Duration </th>
-                            <th class="other-cell"> View </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for examination in schedule_examination %}
-                            <tr class="firstRow">
-                                <td class="sn">{{ forloop.counter }}</td>
-                                <td class="other-cell">{{ examination.name }}</td>
-                                <td class="other-cell"> {{ examination.exam_date }} </td>
-                                <td class="other-cell">{{ examination.duration }}</td />
-                                <td class="other-cell"><a href="{% url 'detail_schedule_exam' examination.id %}">View</a></td />
+            <div class="panel-body">
+                <div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="sn">S/N</th>
+                                <th class="other-cell"> Examination Name</th>
+                                <th class="other-cell"> Exam Date </th>
+                                <th class="other-cell"> Duration </th>
+                                <th class="other-cell"> View </th>
                             </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {% for examination in schedule_examination %}
+                                <tr class="firstRow">
+                                    <td class="sn">{{ forloop.counter }}</td>
+                                    <td class="other-cell">{{ examination.name }}</td>
+                                    <td class="other-cell"> {{ examination.exam_date }} </td>
+                                    <td class="other-cell">{{ examination.duration }}</td />
+                                    <td class="other-cell"><a href="{% url 'detail_schedule_exam' examination.id %}">View</a></td />
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
         {% else %}
-        <div class="panel-body">
-            <div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th class="sn">S/N</th>
-                            <th class="other-cell"> Examination Name</th>
-                            <th class="other-cell"> Exam Date </th>
-                            <th class="other-cell"> Duration </th>
-                            <th class="other-cell"> View </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for examination in schedule_examination %}
-                            <tr class="firstRow">
-                                <td class="sn">{{ forloop.counter }}</td>
-                                <td class="other-cell">{{ examination.name }}</td>
-                                <td class="other-cell"> {{ examination.exam_date }} </td>
-                                <td class="other-cell">{{ examination.duration }}</td />
-                                <td class="other-cell"><a href="{% url 'detail_schedule_exam' examination.id %}">View</a></td />
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+            <div class="panel-body">
+                <div>
+                    Welcome to your dashboard
+                </div>
             </div>
-        </div>
         {% endif %}
         <div class="panel-body">
          </div>

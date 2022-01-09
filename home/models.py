@@ -9,7 +9,7 @@ class StudentBulkUpload(models.Model):
     total_students = models.IntegerField(default=0)
 
     def __str__(self) -> str:
-        return self.id
+        return "{}".format(self.id)
 
 class Student(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
