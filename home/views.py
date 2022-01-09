@@ -52,7 +52,7 @@ def staff_login(request):
         username = form.cleaned_data["admin_id"]
         password = form.cleaned_data['password']
         try:
-            user = Staff.objects.get(user__username=username)
+            user = Staff.objects.get(staff_id=username)
             if user.user.is_active:
                 user = authenticate(username=username, password=password)
                 if user:
@@ -66,7 +66,7 @@ def staff_login(request):
                     request, 'Authorisation Error Contact Admin To Regain Access')
         except Exception as e:
             messages.success(
-                request, 'Staff ID/ Password does not match'.format(e))
+                request, 'Staff ID/ Password does not match{}'.format(e))
     context = {
         'form': form
     }

@@ -8,7 +8,7 @@ class AdminLoginForm(forms.Form):
     admin_id = forms.CharField(required=True, widget=forms.TextInput(
         attrs={'placeholder': 'Admin ID'}))
     password = forms.CharField(required=True, widget=forms.PasswordInput(
-        attrs={'placeholder': 'Password'}))
+        attrs={'placeholder': 'Enter Password'}))
 
 
 class VenueForm(forms.ModelForm):
