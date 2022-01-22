@@ -16,7 +16,7 @@
                         <th class="other-cell"> Staff Name</th>
                         <th class="other-cell"> Staff ID </th>
                         <th class="other-cell"> Allocated To</th>
-                        <th class="other-cell"> Activate/Deactive</th>
+                        <th class="other-cell"> New Allocation</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -25,8 +25,8 @@
                             <td class="sn">{{ forloop.counter }}</td>
                             <td class="other-cell">{{ staff.user.first_name }}</td>
                             <td class="other-cell"> {{ staff.staff_id }} </td>
-                            <td class="other-cell"> Venue from X to Z </td>
-                            <th class="other-cell"> Deactivate</th>
+                            <td class="other-cell"> {{ staff.venue }} </td>
+                            <td class="other-cell"> <a href="{% url 'schedule_staff' staff.id %}"> Allocate</a></td>
                         </tr>
                     {% endfor %}
                 </tbody>
@@ -73,6 +73,7 @@
             </fieldset>
 
         </form>
+        
     </div>
 </div>
 {% endblock content %}

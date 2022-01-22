@@ -98,7 +98,7 @@ def schedule_students_to_exam(file_path, request, scheduled_exam):
                     StudentSchedule.objects.create(
                         student=student,
                         scheduled_exam=scheduled_exam,
-                        seat_number=row
+                        venue="Not Alocated"
                     )
 
                     total_student = total_student + 1

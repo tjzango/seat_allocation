@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% block content %}
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        Staff
+    </div>
+    <div class="panel-body">
+        <form role="form" class="form-horizontal" id="login-form" method="post">{% csrf_token %}
+            <!-- <legend>Site settings</legend> -->
+            <fieldset>
+                <legend>Allocate Staff</legend>
+
+                <div class="form-group">
+                    <label for="Users_name_book" class="col-sm-3 control-label">Venue</label>
+                    <div class="col-sm-9">
+                        <div class="col-md-5">
+                            {% render_field form.venue class="form-control" maxlength="255" name="Users[name_book]" id="Users_name_book" %}
+                        </div>
+                        <div class="col-md-9">
+                            <p class="help-block">Select Venue to allocate</p>
+                            <div class="text-danger form-control-static" id="Users_name_book_em_" style="display:none">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="Users_name_book" class="col-sm-3 control-label">Examination</label>
+                    <div class="col-sm-9">
+                        <div class="col-md-5">
+                            {% render_field form.exam class="form-control" maxlength="255" name="Users[name_book]" id="Users_name_book" %}
+                        </div>
+                        <div class="col-md-9">
+                            <p class="help-block">Select Examination to Schedule</p>
+                            <div class="text-danger form-control-static" id="Users_name_book_em_" style="display:none">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="Users_name_book" class="col-sm-3 control-label">
+                        <button class="btn btn-primary" type="submit">Add Staff</button>
+                    </label>
+                </div>
+                <hr>
+            </fieldset>
+
+        </form>
+        <div>
+            <legend>Previous Allocation</legend>
+            <table>
+                <thead>
+                    <tr>
+                        <th class="sn">S/N</th>
+                        <th class="other-cell"> Staff Name</th>
+                        <th class="other-cell"> Examination </th>
+                        <th class="other-cell"> Allocated To</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for schedule in staff_schedule %}
+                        <tr class="firstRow">
+                            <td class="sn">{{ forloop.counter }}</td>
+                            <td class="other-cell">{{ schedule.staff.user.first_name }}</td>
+                            <td class="other-cell"> {{ schedule.exam.name }} </td>
+                            <td class="other-cell"> {{ schedule.venue.name }} </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        
+        
+    </div>
+</div>
+{% endblock content %}

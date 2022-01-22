@@ -43,7 +43,9 @@
                         <ul class="dropdown-menu" role="menu">
                             <li class="dropdown-header">SETTINGS</li>
                             <li class=""><a href="{% url 'change_password' %}">Change Password</a></li>
+                            {% if usertype.admin_id %}
                             <li class=""><a href="{% url 'all_users' %}">View Users</a></li>
+                            {% endif %}
                             <li class="divider"></li>
                             <li><a href="{% url 'logout' %}">Logout</a></li>
                         </ul>

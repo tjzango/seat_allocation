@@ -6,15 +6,18 @@
     <div class="panel panel-default">
         <div class="panel-heading">
             Schedule Examination
-            <a href="{% url 'allocate_seat' scheduled_exam.id request.path %}">
-                <button class="btn btn-primary" type="submit">Allocate Seats</button>
-            </a>
+            {% if students.first.venue == 'Not Alocated' %}
+                    <a href="{% url 'allocate_seat' scheduled_exam.id request.path %}">
+                        <button class="btn btn-primary" type="submit">Allocate Seats</button>
+                    </a>
+            {% endif %}
+            
         </div>
         <div class="panel-body">
             <form role="form" class="form-horizontal" id="login-form" method="post" enctype="multipart/form-data"> 
                 {% csrf_token %}
                 <fieldset>
-                    {% if scheduled_exam.total_student > scheduled_exam.current_capacity %}
+                    {% if scheduled_exam.current_capacity < scheduled_exam.total_student %}
                     <div class="form-group">
                         <label for="Users_email" class="col-sm-3 control-label">Add Venue</label>
                         <div class="col-sm-9">
@@ -66,7 +69,6 @@
                             <th class="sn">S/N</th>
                             <th class="other-cell"> Student Name</th>
                             <th class="other-cell"> Registration Number </th>
-                            <th class="other-cell"> Seat Number </th>
                             <th class="other-cell"> Venue </th>
                         </tr>
                     </thead>
@@ -76,7 +78,6 @@
                                 <td class="sn">{{ forloop.counter }}</td>
                                 <td class="other-cell">{{ student.student.user.first_name }}</td>
                                 <td class="other-cell"> {{ student.student.user.username }} </td>
-                                <td class="other-cell">{{ student.seat_number }}</td />
                                 <td class="other-cell">{{ student.venue }}</td />
                             </tr>
                         {% endfor %}

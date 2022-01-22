@@ -20,6 +20,8 @@ from .views import (
     student_login,
     allocate_seat,
     student_dashboard,
+    ScheduleStaff,
+    staff_dashboard,
 )
 from django.contrib.auth.views import LogoutView, PasswordChangeView
 
@@ -42,8 +44,10 @@ urlpatterns = [
     path('a/view/detail/schedule/<int:id>/', detail_schedule_exam, name="detail_schedule_exam"),
     path('a/view/student/group/<int:id>/', view_student_group, name="view_student_group"),
     path('a/delete/student/group/<int:id>/', delete_student_group, name="delete_student_group"),
+    path("a/schedule/staff/<int:id>/", ScheduleStaff, name="schedule_staff"),
     path('logout/', LogoutView.as_view(), name='logout'),
     path('a/dashboard/', admin_dashboard, name="admin-dashboard"),
+    path('staff/dashboard/', staff_dashboard, name="staff_dashboard"),
     path('a/all/users/', allusers, name="all_users"),
     path('password/change/', PasswordChangeView.as_view(
          template_name='password_change_form.html',

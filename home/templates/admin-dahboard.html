@@ -19,7 +19,7 @@
                                 <th class="other-cell"> Examination Name</th>
                                 <th class="other-cell"> Exam Date </th>
                                 <th class="other-cell"> Duration </th>
-                                <th class="other-cell"> View </th>
+                                <th class="other-cell"> Venue </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -29,6 +29,7 @@
                                     <td class="other-cell">{{ examination.scheduled_exam.name }}</td>
                                     <td class="other-cell"> {{ examination.scheduled_exam.exam_date }} </td>
                                     <td class="other-cell">{{ examination.scheduled_exam.duration }}</td />
+                                    <td class="other-cell">{{ examination.venue }}</td />
                                 </tr>
                             {% endfor %}
                         </tbody>
@@ -45,17 +46,15 @@
                                 <th class="other-cell"> Examination Name</th>
                                 <th class="other-cell"> Exam Date </th>
                                 <th class="other-cell"> Duration </th>
-                                <th class="other-cell"> View </th>
                             </tr>
                         </thead>
                         <tbody>
-                            {% for examination in schedule_examination %}
+                            {% for schedule in staff_schedule %}
                                 <tr class="firstRow">
                                     <td class="sn">{{ forloop.counter }}</td>
-                                    <td class="other-cell">{{ examination.name }}</td>
-                                    <td class="other-cell"> {{ examination.exam_date }} </td>
-                                    <td class="other-cell">{{ examination.duration }}</td />
-                                    <td class="other-cell"><a href="{% url 'detail_schedule_exam' examination.id %}">View</a></td />
+                                    <td class="other-cell">{{ schedule.exam.name }}</td>
+                                    <td class="other-cell"> {{ schedule.exam.exam_date }} </td>
+                                    <td class="other-cell">{{ schedule.exam.duration }}</td />
                                 </tr>
                             {% endfor %}
                         </tbody>

@@ -1,3 +1,4 @@
+from pyexpat import model
 from django.db import models
 from django.contrib.auth.models import User
 # Create your models here.
@@ -23,6 +24,7 @@ class Student(models.Model):
 class Staff(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     staff_id = models.CharField(max_length=500)
+    venue = models.CharField(max_length=500)
     
     def __str__(self):
         return "{}.".format(self.user.username)
@@ -38,14 +40,13 @@ class Admin(models.Model):
 
 class Venue(models.Model):
     name = models.CharField(max_length=500)
-    address = models.TextField()
     capacity = models.IntegerField(default=0)
     availability = models.BooleanField(default=True)
     until = models.TimeField(blank=True, null=True)
     show = models.BooleanField(default=True)
 
     def __str__(self) -> str:
-        return "{} ({})".format(self.name, self.capacity)
+        return "{} (Capacity: {})".format(self.name, self.capacity)
 
 
 class ScheduleExamination(models.Model):
@@ -57,8 +58,16 @@ class ScheduleExamination(models.Model):
     total_student = models.IntegerField(default=0)
     current_capacity = models.IntegerField(default=0)
 
+    def __str__(self) -> str:
+        return self.name
+
 class StudentSchedule(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     scheduled_exam = models.ForeignKey(ScheduleExamination, on_delete=models.CASCADE)
-    seat_number = models.IntegerField()
-    venue = models.ForeignKey(Venue, on_delete=models.CASCADE, null=True)
+    venue = models.CharField(max_length=500)
+
+
+class StaffSchedule(models.Model):
+    staff = models.ForeignKey(Staff, on_delete=models.CASCADE)
+    venue = models.ForeignKey(Venue, on_delete=models.CASCADE)
+    exam = models.ForeignKey(ScheduleExamination, on_delete=models.CASCADE)

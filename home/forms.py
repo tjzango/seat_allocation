@@ -1,7 +1,7 @@
 from django import forms
 from django.db import models
 from django.db.models import fields
-from .models import StudentBulkUpload, Venue, Staff, ScheduleExamination
+from .models import StaffSchedule, StudentBulkUpload, Venue, Staff, ScheduleExamination
 
 
 class AdminLoginForm(forms.Form):
@@ -15,9 +15,15 @@ class VenueForm(forms.ModelForm):
 
     class Meta:
         model = Venue
-        fields = ('name', 'address', 'capacity')
+        fields = ('name', 'capacity')
 
 
+
+class StaffScheduleForm(forms.ModelForm):
+
+    class Meta:
+        model = StaffSchedule
+        fields = ('venue', 'exam')
 
 class StaffForm(forms.ModelForm):
     full_name = forms.CharField(widget=forms.TextInput)
@@ -30,7 +36,7 @@ class VenueForm(forms.ModelForm):
 
     class Meta:
         model = Venue
-        fields = ('name', 'address', 'capacity')
+        fields = ('name', 'capacity')
 
 
 class StudentBulkUploadForm(forms.ModelForm):
@@ -47,5 +53,5 @@ class ScheduleExaminationForm(forms.ModelForm):
 
 class AddVenueForm(forms.Form):
     venue = forms.ModelChoiceField(
-        required=True, queryset=Venue.objects.all()
+        required=True, queryset=Venue.objects.filter(show=True)
     )

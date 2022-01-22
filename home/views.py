@@ -3,13 +3,14 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.http.response import HttpResponse
 from django.shortcuts import get_object_or_404, render, redirect
-from .forms import AdminLoginForm, ScheduleExaminationForm, StaffForm
-from .models import ScheduleExamination, Student, Admin, Staff, StudentBulkUpload, StudentSchedule
+from .forms import AdminLoginForm, StaffScheduleForm, ScheduleExaminationForm, StaffForm
+from .models import ScheduleExamination, StaffSchedule, Student, Admin, Staff, StudentBulkUpload, StudentSchedule
 from django.contrib.auth import authenticate, login, logout
 from .forms import VenueForm, StudentBulkUploadForm, AddVenueForm
 from .models import Venue
 from django.contrib import messages
 import os
+import random
 from .utility import save_new_students_from_csv, delete_students_from_csv, schedule_students_to_exam
 from seating_arrangement.settings import BASE_DIR
 import logging
@@ -57,7 +58,7 @@ def staff_login(request):
                 user = authenticate(username=username, password=password)
                 if user:
                     login(request, user)
-                    return redirect("admin-dashboard")
+                    return redirect("staff_dashboard")
                 else:
                     messages.success(
                         request, 'Staff ID/ Password does not match')
@@ -68,7 +69,8 @@ def staff_login(request):
             messages.success(
                 request, 'Staff ID/ Password does not match{}'.format(e))
     context = {
-        'form': form
+        'form': form,
+        
     }
     return render(request, "staff-login.html", context)
 
@@ -79,6 +81,15 @@ def student_dashboard(request):
     context = {
         "student": student,
         "examinations": examinations
+    }
+    return render(request, "admin-dahboard.html", context)
+
+
+def staff_dashboard(request):
+    staff = Staff.objects.get(user=request.user)
+    staff_schedule = StaffSchedule.objects.filter(staff=staff).order_by("-id")
+    context = {
+        "staff_schedule": staff_schedule
     }
     return render(request, "admin-dahboard.html", context)
 
@@ -112,6 +123,7 @@ def student_login(request):
     return render(request, "staff-login.html", context)
 
 def admin_dashboard(request):
+
     return render(request, "admin-dahboard.html")
 
 
@@ -277,12 +289,15 @@ def detail_schedule_exam(request, id):
     if form.is_valid():
         venue = form.cleaned_data['venue']
         if scheduled_exam.total_student > scheduled_exam.current_capacity:
+            if scheduled_exam.venue.filter(id=venue.id):
+                messages.error(request, "Venue already added to exam")
+                return redirect('detail_schedule_exam', id=id)
             scheduled_exam.venue.add(venue)
             scheduled_exam.current_capacity = scheduled_exam.current_capacity + venue.capacity
             scheduled_exam.save()
             venue.availability = False
             venue.save()
-            messages.success(request, "Venue add to exam")
+
             return redirect('detail_schedule_exam', id=id)
         
 
@@ -312,6 +327,24 @@ def allocate_seat(request, schedule_id, path):
     if scheduled_exam.current_capacity < scheduled_exam.total_student:
         messages.error(request,"Venue can not fit student, Kindly add more venues")
         return redirect(path)
+    allocation = []
+    for venue in scheduled_exam.venue.select_related():
+        data = list(range(1, venue.capacity+1))
+        random.shuffle(data)
+        for i in data:
+            i = "{} Seat {}".format(venue.name, i)
+            allocation.append(i)
+
+    random.shuffle(allocation)
+    student = StudentSchedule.objects.filter(scheduled_exam=scheduled_exam) #.values()
+    print(allocation)
+    counter = 0 
+    for instance in student:
+        instance.venue = allocation[counter]
+        instance.save()
+        counter = counter + 1
+    return redirect(path)
+            
     
 
 
@@ -321,3 +354,38 @@ def allusers(request):
         'users': users
     }
     return render(request, "allusers.html", context)
+
+
+
+def ScheduleStaff(request, id):
+    form = StaffScheduleForm(request.POST or None)
+    staff = Staff.objects.get(id=id)
+    if form.is_valid():
+        venue = form.cleaned_data["venue"]
+        exam = form.cleaned_data['exam']
+        try:
+            staff_schedule = StaffSchedule.objects.get(exam=exam, staff=staff)
+            if staff_schedule:
+                staff_schedule.venue = venue
+                staff_schedule.save()
+                staff.venue = "Allocated to {}".format(venue.name)
+                staff.save()
+                messages.success(request, 'Successfully Change Examination Venue')
+                return redirect('schedule_staff', id=staff.id)
+            
+        except Exception as e:
+            StaffSchedule.objects.create(
+                    venue=venue,
+                    staff=staff,
+                    exam=exam
+                )
+            staff.venue = "Allocated to {}".format(venue.name)
+            staff.save()
+            messages.success(
+                    request, 'Successfully Schedule Staff to examniation {}'.format(e))
+
+    context = {
+        "staff_schedule": StaffSchedule.objects.filter(staff=staff),
+        "form": form
+    }
+    return render(request, "schedule_staff.html", context)
