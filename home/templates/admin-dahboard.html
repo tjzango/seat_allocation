@@ -46,6 +46,8 @@
                                 <th class="other-cell"> Examination Name</th>
                                 <th class="other-cell"> Exam Date </th>
                                 <th class="other-cell"> Duration </th>
+                                <th class="other-cell"> Venue </th>
+                                
                             </tr>
                         </thead>
                         <tbody>
@@ -55,6 +57,7 @@
                                     <td class="other-cell">{{ schedule.exam.name }}</td>
                                     <td class="other-cell"> {{ schedule.exam.exam_date }} </td>
                                     <td class="other-cell">{{ schedule.exam.duration }}</td />
+                                    <td class="other-cell">{{ schedule.venue.name }}</td />
                                 </tr>
                             {% endfor %}
                         </tbody>
